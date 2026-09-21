@@ -1,0 +1,89 @@
+{
+  "name": "jimothy-seattle-desktop-pet",
+  "version": "1.0.0",
+  "description": "Jimothy — Seattle desktop pet raccoon companion for Windows and macOS. An Emerald City taskbar trash panda who wanders, naps, and talks.",
+  "keywords": [
+    "jimothy",
+    "seattle",
+    "desktop pet",
+    "raccoon",
+    "companion",
+    "electron",
+    "mascot",
+    "taskbar",
+    "desktop companion",
+    "trash panda"
+  ],
+  "main": "dist/main/main.js",
+  "author": "Manaiakalani",
+  "license": "MIT",
+  "scripts": {
+    "generate:sprite-manifest": "node scripts/generate-sprite-manifest.js",
+    "pack:sprites": "node scripts/pack-sprites.js",
+    "copy:renderer": "node scripts/copy-renderer.js",
+    "build:main": "tsc",
+    "build:preload": "npx esbuild src/preload/preload.ts --bundle --outfile=dist/preload/preload.js --platform=node --format=cjs --target=es2022 --external:electron",
+    "build:renderer": "npx esbuild src/renderer/index.ts --bundle --outfile=dist/renderer/bundle.js --platform=browser --format=iife --target=es2022",
+    "build:settings": "npx esbuild src/renderer/settings.ts --bundle --outfile=dist/renderer/settings.js --platform=browser --format=iife --target=es2022",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer && npm run build:settings && npm run copy:renderer",
+    "test": "npm run build:main && npm run build:preload && npm run build:settings && node --test scripts/test.cjs",
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "start": "npm run build && electron .",
+    "dev": "npm run build && electron . --dev",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --win",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.0.0",
+    "esbuild": "^0.28.1",
+    "playwright": "^1.63.0",
+    "puppeteer": "^25.11.0",
+    "sharp": "^0.35.3",
+    "typescript": "^5.5.0"
+  },
+  "build": {
+    "appId": "com.jimothy.desktop-mascot",
+    "productName": "Jimothy",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/assets/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/icons/jimothy-1024.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.entertainment",
+      "icon": "src/assets/icons/jimothy-1024.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": true,
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "dmg": {
+      "title": "Jimothy"
+    }
+  },
+  "allowScripts": {
+    "electron@33.4.11": true,
+    "esbuild@0.28.1": true
+  }
+}

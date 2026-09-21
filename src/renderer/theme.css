@@ -1,0 +1,55 @@
+:root {
+  --paper: #f6f0e6;
+  --paper-deep: #efe4d4;
+  --ink: #2c2420;
+  --ink-soft: #5a4d43;
+  --rule: #d8cbb8;
+  --amber: #8b5e3c;
+  --amber-hot: #a56c44;
+  --cream: #faf6ee;
+  --shadow: 0 8px 20px rgba(44, 36, 32, 0.14);
+  --focus: 0 0 0 3px rgba(139, 94, 60, 0.35);
+  --radius: 14px;
+  --font: "Avenir Next", "Segoe UI Variable", "Segoe UI", "Trebuchet MS", sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1c1916;
+    --paper-deep: #141210;
+    --ink: #f3ead8;
+    --ink-soft: #c4b8a8;
+    --rule: #3f3830;
+    --amber: #c48a5a;
+    --amber-hot: #d7a06c;
+    --cream: #2a2520;
+    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    --focus: 0 0 0 3px rgba(196, 138, 90, 0.45);
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+::selection {
+  background: rgba(139, 94, 60, 0.28);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

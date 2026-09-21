@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jimothy — Seattle desktop pet raccoon companion</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; font-family: "Segoe UI", "Avenir Next", sans-serif; }
+    .desktop {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      background:
+        linear-gradient(180deg, #6b7c8a 0%, #8a9aa8 38%, #b7c4ce 70%, #cfd8df 100%);
+    }
+    .mist {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.28), transparent 50%);
+    }
+    .skyline {
+      position: absolute; left: 0; right: 0; bottom: 48px; height: 220px;
+      background: linear-gradient(180deg, transparent, rgba(40,48,56,0.35));
+    }
+    .taskbar {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 48px;
+      background: rgba(32, 36, 40, 0.82);
+      backdrop-filter: blur(16px);
+      display: flex; align-items: center; justify-content: center;
+      color: #e8eef2; font-size: 13px; letter-spacing: 0.02em;
+    }
+    .icons { position: absolute; left: 18px; top: 18px; color: #f4f7fa; font-size: 12px; line-height: 1.7; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+    .jimothy {
+      position: absolute; left: 50%; bottom: 40px;
+      transform: translateX(-50%);
+      width: 220px; height: 220px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(20,24,28,0.35));
+    }
+    .bubble {
+      position: absolute; left: 50%; bottom: 268px;
+      transform: translateX(-50%);
+      background: #faf6ee; color: #2c2420;
+      border: 1.5px solid #4a3728; border-radius: 16px;
+      padding: 8px 14px; font-size: 15px; white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(44,36,32,0.2);
+    }
+    .bubble::after {
+      content: ''; position: absolute; left: 50%; bottom: -9px;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent; border-right: 8px solid transparent;
+      border-top: 10px solid #faf6ee;
+    }
+    .bubble::before {
+      content: ''; position: absolute; left: 50%; bottom: -11px;
+      transform: translateX(-50%);
+      border-left: 9px solid transparent; border-right: 9px solid transparent;
+      border-top: 11px solid #4a3728;
+    }
+    .brand {
+      position: absolute; left: 24px; bottom: 64px; color: rgba(255,255,255,0.88);
+      font-size: 13px; letter-spacing: 0.04em;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    }
+  </style>
+</head>
+<body>
+  <div class="desktop" id="stage">
+    <div class="mist"></div>
+    <div class="skyline"></div>
+    <div class="icons">Recycle Bin<br>Projects<br>coffee.txt</div>
+    <div class="bubble">Classic Seattle drizzle.</div>
+    <img class="jimothy" src="../screenshots/idle-frame.png" alt="Jimothy the Seattle desktop raccoon">
+    <div class="brand">Jimothy · Seattle desktop pet raccoon companion</div>
+    <div class="taskbar">9:21 AM  ·  Seattle</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,2497 @@
+{
+  "name": "Jimothy desktop mascot",
+  "version": "1.0",
+  "variants": [
+    "jacketed",
+    "non-jacketed"
+  ],
+  "atlas": {
+    "width": 4096,
+    "height": 4096,
+    "columns": 8,
+    "rows": 8,
+    "cell_width": 512,
+    "cell_height": 512,
+    "color_mode": "RGBA",
+    "alpha": "straight",
+    "pivot_pixels": [
+      256,
+      458
+    ],
+    "pivot_normalized": [
+      0.5,
+      0.89453125
+    ]
+  },
+  "quality": {
+    "source_atlas_size": [
+      1254,
+      1254
+    ],
+    "output_is_upscaled": true,
+    "motion": "optical-flow interpolation with occlusion-aware contours and a separate jump path",
+    "native_4k_artwork": false,
+    "source_poses_per_animation": 8,
+    "note": "The 64 source poses are generated artwork. The 60Hz exports interpolate them; they are not 60 independently drawn poses per second."
+  },
+  "styles": {
+    "jacketed": {
+      "atlas": "atlases/jimothy-jacketed-4096.png",
+      "animations": {
+        "idle": {
+          "file": "animations/jacketed/idle.webp",
+          "fps": 60,
+          "logical_frame_count": 120,
+          "encoded_frame_count": 78,
+          "duration_ms": 2000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 42,
+              "key": 0
+            },
+            {
+              "frame": 52,
+              "key": 1
+            },
+            {
+              "frame": 55,
+              "key": 2
+            },
+            {
+              "frame": 59,
+              "key": 3
+            },
+            {
+              "frame": 63,
+              "key": 4
+            },
+            {
+              "frame": 84,
+              "key": 5
+            },
+            {
+              "frame": 102,
+              "key": 6
+            },
+            {
+              "frame": 120,
+              "key": 0
+            }
+          ],
+          "row": 0,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/idle.png",
+            "width": 4096,
+            "height": 2048,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 8,
+            "frame_count": 120,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "walk-right": {
+          "file": "animations/jacketed/walk-right.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 7.5,
+              "key": 1
+            },
+            {
+              "frame": 15.0,
+              "key": 2
+            },
+            {
+              "frame": 22.5,
+              "key": 3
+            },
+            {
+              "frame": 30.0,
+              "key": 4
+            },
+            {
+              "frame": 37.5,
+              "key": 5
+            },
+            {
+              "frame": 45.0,
+              "key": 6
+            },
+            {
+              "frame": 52.5,
+              "key": 7
+            },
+            {
+              "frame": 60.0,
+              "key": 0
+            }
+          ],
+          "row": 1,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/walk-right.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "run-right": {
+          "file": "animations/jacketed/run-right.webp",
+          "fps": 60,
+          "logical_frame_count": 42,
+          "encoded_frame_count": 42,
+          "duration_ms": 700,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 5.25,
+              "key": 1
+            },
+            {
+              "frame": 10.5,
+              "key": 2
+            },
+            {
+              "frame": 15.75,
+              "key": 3
+            },
+            {
+              "frame": 21.0,
+              "key": 4
+            },
+            {
+              "frame": 26.25,
+              "key": 5
+            },
+            {
+              "frame": 31.5,
+              "key": 6
+            },
+            {
+              "frame": 36.75,
+              "key": 7
+            },
+            {
+              "frame": 42.0,
+              "key": 0
+            }
+          ],
+          "row": 2,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/run-right.png",
+            "width": 4096,
+            "height": 768,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 3,
+            "frame_count": 42,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "jump": {
+          "file": "animations/jacketed/jump.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": false,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 8,
+              "key": 1
+            },
+            {
+              "frame": 17,
+              "key": 2
+            },
+            {
+              "frame": 27,
+              "key": 3
+            },
+            {
+              "frame": 35,
+              "key": 4
+            },
+            {
+              "frame": 43,
+              "key": 5
+            },
+            {
+              "frame": 52,
+              "key": 6
+            },
+            {
+              "frame": 59,
+              "key": 7
+            }
+          ],
+          "row": 3,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/jump.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "wave": {
+          "file": "animations/jacketed/wave.webp",
+          "fps": 60,
+          "logical_frame_count": 90,
+          "encoded_frame_count": 90,
+          "duration_ms": 1500,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 12,
+              "key": 1
+            },
+            {
+              "frame": 22,
+              "key": 2
+            },
+            {
+              "frame": 31,
+              "key": 3
+            },
+            {
+              "frame": 40,
+              "key": 4
+            },
+            {
+              "frame": 49,
+              "key": 3
+            },
+            {
+              "frame": 58,
+              "key": 4
+            },
+            {
+              "frame": 66,
+              "key": 5
+            },
+            {
+              "frame": 74,
+              "key": 6
+            },
+            {
+              "frame": 82,
+              "key": 7
+            },
+            {
+              "frame": 90,
+              "key": 0
+            }
+          ],
+          "row": 4,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/wave.png",
+            "width": 4096,
+            "height": 1536,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 6,
+            "frame_count": 90,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "sit": {
+          "file": "animations/jacketed/sit.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": false,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 8.428571428571429,
+              "key": 1
+            },
+            {
+              "frame": 16.857142857142858,
+              "key": 2
+            },
+            {
+              "frame": 25.285714285714285,
+              "key": 3
+            },
+            {
+              "frame": 33.714285714285715,
+              "key": 4
+            },
+            {
+              "frame": 42.142857142857146,
+              "key": 5
+            },
+            {
+              "frame": 50.57142857142857,
+              "key": 6
+            },
+            {
+              "frame": 59.0,
+              "key": 7
+            }
+          ],
+          "row": 5,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/sit.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "sleep": {
+          "file": "animations/jacketed/sleep.webp",
+          "fps": 60,
+          "logical_frame_count": 180,
+          "encoded_frame_count": 180,
+          "duration_ms": 3000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 22.5,
+              "key": 1
+            },
+            {
+              "frame": 45.0,
+              "key": 2
+            },
+            {
+              "frame": 67.5,
+              "key": 3
+            },
+            {
+              "frame": 90.0,
+              "key": 4
+            },
+            {
+              "frame": 112.5,
+              "key": 5
+            },
+            {
+              "frame": 135.0,
+              "key": 6
+            },
+            {
+              "frame": 157.5,
+              "key": 7
+            },
+            {
+              "frame": 180.0,
+              "key": 0
+            }
+          ],
+          "row": 6,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/sleep.png",
+            "width": 4096,
+            "height": 3072,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 12,
+            "frame_count": 180,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "celebrate": {
+          "file": "animations/jacketed/celebrate.webp",
+          "fps": 60,
+          "logical_frame_count": 90,
+          "encoded_frame_count": 90,
+          "duration_ms": 1500,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 11.25,
+              "key": 1
+            },
+            {
+              "frame": 22.5,
+              "key": 2
+            },
+            {
+              "frame": 33.75,
+              "key": 3
+            },
+            {
+              "frame": 45.0,
+              "key": 4
+            },
+            {
+              "frame": 56.25,
+              "key": 5
+            },
+            {
+              "frame": 67.5,
+              "key": 6
+            },
+            {
+              "frame": 78.75,
+              "key": 7
+            },
+            {
+              "frame": 90.0,
+              "key": 0
+            }
+          ],
+          "row": 7,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/jacketed/celebrate.png",
+            "width": 4096,
+            "height": 1536,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 6,
+            "frame_count": 90,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        }
+      }
+    },
+    "non-jacketed": {
+      "atlas": "atlases/jimothy-non-jacketed-4096.png",
+      "animations": {
+        "idle": {
+          "file": "animations/non-jacketed/idle.webp",
+          "fps": 60,
+          "logical_frame_count": 120,
+          "encoded_frame_count": 78,
+          "duration_ms": 2000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 42,
+              "key": 0
+            },
+            {
+              "frame": 52,
+              "key": 1
+            },
+            {
+              "frame": 55,
+              "key": 2
+            },
+            {
+              "frame": 59,
+              "key": 3
+            },
+            {
+              "frame": 63,
+              "key": 4
+            },
+            {
+              "frame": 84,
+              "key": 5
+            },
+            {
+              "frame": 102,
+              "key": 6
+            },
+            {
+              "frame": 120,
+              "key": 0
+            }
+          ],
+          "row": 0,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 0,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/idle.png",
+            "width": 4096,
+            "height": 2048,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 8,
+            "frame_count": 120,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "walk-right": {
+          "file": "animations/non-jacketed/walk-right.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 7.5,
+              "key": 1
+            },
+            {
+              "frame": 15.0,
+              "key": 2
+            },
+            {
+              "frame": 22.5,
+              "key": 3
+            },
+            {
+              "frame": 30.0,
+              "key": 4
+            },
+            {
+              "frame": 37.5,
+              "key": 5
+            },
+            {
+              "frame": 45.0,
+              "key": 6
+            },
+            {
+              "frame": 52.5,
+              "key": 7
+            },
+            {
+              "frame": 60.0,
+              "key": 0
+            }
+          ],
+          "row": 1,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 512,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/walk-right.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "run-right": {
+          "file": "animations/non-jacketed/run-right.webp",
+          "fps": 60,
+          "logical_frame_count": 42,
+          "encoded_frame_count": 42,
+          "duration_ms": 700,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 5.25,
+              "key": 1
+            },
+            {
+              "frame": 10.5,
+              "key": 2
+            },
+            {
+              "frame": 15.75,
+              "key": 3
+            },
+            {
+              "frame": 21.0,
+              "key": 4
+            },
+            {
+              "frame": 26.25,
+              "key": 5
+            },
+            {
+              "frame": 31.5,
+              "key": 6
+            },
+            {
+              "frame": 36.75,
+              "key": 7
+            },
+            {
+              "frame": 42.0,
+              "key": 0
+            }
+          ],
+          "row": 2,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 1024,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/run-right.png",
+            "width": 4096,
+            "height": 768,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 3,
+            "frame_count": 42,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "jump": {
+          "file": "animations/non-jacketed/jump.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": false,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 8,
+              "key": 1
+            },
+            {
+              "frame": 17,
+              "key": 2
+            },
+            {
+              "frame": 27,
+              "key": 3
+            },
+            {
+              "frame": 35,
+              "key": 4
+            },
+            {
+              "frame": 43,
+              "key": 5
+            },
+            {
+              "frame": 52,
+              "key": 6
+            },
+            {
+              "frame": 59,
+              "key": 7
+            }
+          ],
+          "row": 3,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 1536,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/jump.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "wave": {
+          "file": "animations/non-jacketed/wave.webp",
+          "fps": 60,
+          "logical_frame_count": 90,
+          "encoded_frame_count": 90,
+          "duration_ms": 1500,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0,
+              "key": 0
+            },
+            {
+              "frame": 12,
+              "key": 1
+            },
+            {
+              "frame": 22,
+              "key": 2
+            },
+            {
+              "frame": 31,
+              "key": 3
+            },
+            {
+              "frame": 40,
+              "key": 4
+            },
+            {
+              "frame": 49,
+              "key": 3
+            },
+            {
+              "frame": 58,
+              "key": 4
+            },
+            {
+              "frame": 66,
+              "key": 5
+            },
+            {
+              "frame": 74,
+              "key": 6
+            },
+            {
+              "frame": 82,
+              "key": 7
+            },
+            {
+              "frame": 90,
+              "key": 0
+            }
+          ],
+          "row": 4,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 2048,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/wave.png",
+            "width": 4096,
+            "height": 1536,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 6,
+            "frame_count": 90,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "sit": {
+          "file": "animations/non-jacketed/sit.webp",
+          "fps": 60,
+          "logical_frame_count": 60,
+          "encoded_frame_count": 60,
+          "duration_ms": 1000,
+          "loop": false,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 8.428571428571429,
+              "key": 1
+            },
+            {
+              "frame": 16.857142857142858,
+              "key": 2
+            },
+            {
+              "frame": 25.285714285714285,
+              "key": 3
+            },
+            {
+              "frame": 33.714285714285715,
+              "key": 4
+            },
+            {
+              "frame": 42.142857142857146,
+              "key": 5
+            },
+            {
+              "frame": 50.57142857142857,
+              "key": 6
+            },
+            {
+              "frame": 59.0,
+              "key": 7
+            }
+          ],
+          "row": 5,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 2560,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/sit.png",
+            "width": 4096,
+            "height": 1024,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 4,
+            "frame_count": 60,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "sleep": {
+          "file": "animations/non-jacketed/sleep.webp",
+          "fps": 60,
+          "logical_frame_count": 180,
+          "encoded_frame_count": 180,
+          "duration_ms": 3000,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 22.5,
+              "key": 1
+            },
+            {
+              "frame": 45.0,
+              "key": 2
+            },
+            {
+              "frame": 67.5,
+              "key": 3
+            },
+            {
+              "frame": 90.0,
+              "key": 4
+            },
+            {
+              "frame": 112.5,
+              "key": 5
+            },
+            {
+              "frame": 135.0,
+              "key": 6
+            },
+            {
+              "frame": 157.5,
+              "key": 7
+            },
+            {
+              "frame": 180.0,
+              "key": 0
+            }
+          ],
+          "row": 6,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 3072,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/sleep.png",
+            "width": 4096,
+            "height": 3072,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 12,
+            "frame_count": 180,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        },
+        "celebrate": {
+          "file": "animations/non-jacketed/celebrate.webp",
+          "fps": 60,
+          "logical_frame_count": 90,
+          "encoded_frame_count": 90,
+          "duration_ms": 1500,
+          "loop": true,
+          "timeline": [
+            {
+              "frame": 0.0,
+              "key": 0
+            },
+            {
+              "frame": 11.25,
+              "key": 1
+            },
+            {
+              "frame": 22.5,
+              "key": 2
+            },
+            {
+              "frame": 33.75,
+              "key": 3
+            },
+            {
+              "frame": 45.0,
+              "key": 4
+            },
+            {
+              "frame": 56.25,
+              "key": 5
+            },
+            {
+              "frame": 67.5,
+              "key": 6
+            },
+            {
+              "frame": 78.75,
+              "key": 7
+            },
+            {
+              "frame": 90.0,
+              "key": 0
+            }
+          ],
+          "row": 7,
+          "keyframes": [
+            {
+              "index": 0,
+              "x": 0,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 1,
+              "x": 512,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 2,
+              "x": 1024,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 3,
+              "x": 1536,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 4,
+              "x": 2048,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 5,
+              "x": 2560,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 6,
+              "x": 3072,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            },
+            {
+              "index": 7,
+              "x": 3584,
+              "y": 3584,
+              "w": 512,
+              "h": 512,
+              "pivot": [
+                256,
+                458
+              ]
+            }
+          ],
+          "sprite_sheet": {
+            "file": "animation-sheets/non-jacketed/celebrate.png",
+            "width": 4096,
+            "height": 1536,
+            "cell_width": 256,
+            "cell_height": 256,
+            "columns": 16,
+            "rows": 6,
+            "frame_count": 90,
+            "fps": 60,
+            "pivot_pixels": [
+              128,
+              229
+            ],
+            "frame_order": "left-to-right, then top-to-bottom; unused trailing cells are transparent"
+          }
+        }
+      }
+    }
+  }
+}

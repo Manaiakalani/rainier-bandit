@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file:; style-src 'self'; script-src 'self'">
+  <title>Jimothy Settings</title>
+  <link rel="stylesheet" href="./theme.css">
+  <link rel="stylesheet" href="./settings.css">
+</head>
+<body>
+  <header class="masthead">
+    <img class="portrait" id="portrait" src="../../src/assets/icons/jimothy-portrait.png" width="80" height="80" alt="">
+    <div>
+      <h1>Jimothy</h1>
+      <p>A raccoon who lives on your desktop.</p>
+    </div>
+  </header>
+
+  <form id="settings-form" autocomplete="off">
+    <section aria-labelledby="look-heading">
+      <h2 id="look-heading">Look</h2>
+      <div class="stack">
+        <div class="row">
+          <span>
+            <span class="label">Outfit</span>
+            <span class="desc">Black zip-up or just fur</span>
+          </span>
+          <div class="seg" role="radiogroup" aria-label="Outfit" id="spriteStyle">
+            <button type="button" class="seg-btn" data-value="jacketed">Jacket</button>
+            <button type="button" class="seg-btn" data-value="non-jacketed">No jacket</button>
+          </div>
+        </div>
+        <div class="row">
+          <span>
+            <span class="label">Size</span>
+            <span class="desc">How big he sits on the desktop</span>
+          </span>
+          <div class="seg" role="radiogroup" aria-label="Size" id="petScale">
+            <button type="button" class="seg-btn" data-value="small">Small</button>
+            <button type="button" class="seg-btn" data-value="medium">Medium</button>
+            <button type="button" class="seg-btn" data-value="large">Large</button>
+          </div>
+        </div>
+        <div class="row">
+          <span>
+            <span class="label">Opacity</span>
+            <span class="desc">How solid he sits on the desktop</span>
+          </span>
+          <div class="seg" role="radiogroup" aria-label="Opacity" id="opacity">
+            <button type="button" class="seg-btn" data-value="100">Full</button>
+            <button type="button" class="seg-btn" data-value="80">Soft</button>
+            <button type="button" class="seg-btn" data-value="60">Ghost</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="movement-heading">
+      <h2 id="movement-heading">Movement</h2>
+      <div class="stack">
+        <label class="row" for="roaming">
+          <span>
+            <span class="label">Roam around</span>
+            <span class="desc">Walk along the bottom of the screen</span>
+          </span>
+          <input id="roaming" type="checkbox" role="switch">
+        </label>
+        <div class="row nested" id="wanderRow" hidden>
+          <span>
+            <span class="label">How often</span>
+            <span class="desc">Rest vs stroll</span>
+          </span>
+          <select id="wanderFrequency">
+            <option value="calm">Calm</option>
+            <option value="normal">Normal</option>
+            <option value="active">Active</option>
+          </select>
+        </div>
+        <div class="row nested" id="paceRow" hidden>
+          <span>
+            <span class="label">Pace</span>
+            <span class="desc">How quickly he covers ground</span>
+          </span>
+          <div class="seg" role="radiogroup" aria-label="Pace" id="pace">
+            <button type="button" class="seg-btn" data-value="slow">Slow</button>
+            <button type="button" class="seg-btn" data-value="normal">Normal</button>
+            <button type="button" class="seg-btn" data-value="brisk">Brisk</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="life-heading">
+      <h2 id="life-heading">Personality</h2>
+      <div class="stack">
+        <div class="row">
+          <span>
+            <span class="label">On click</span>
+            <span class="desc">What he does when you pet him</span>
+          </span>
+          <div class="seg" role="radiogroup" aria-label="Click action" id="clickAction">
+            <button type="button" class="seg-btn" data-value="paw_wave">Wave</button>
+            <button type="button" class="seg-btn" data-value="happy_bounce">Cheer</button>
+            <button type="button" class="seg-btn" data-value="startled">Jump</button>
+          </div>
+        </div>
+        <label class="row" for="breathing">
+          <span>
+            <span class="label">Breathing</span>
+            <span class="desc">Subtle idle motion while he stands still</span>
+          </span>
+          <input id="breathing" type="checkbox" role="switch">
+        </label>
+        <label class="row" for="speechBubbles">
+          <span>
+            <span class="label">Speech bubbles</span>
+            <span class="desc">Occasional raccoon asides</span>
+          </span>
+          <input id="speechBubbles" type="checkbox" role="switch">
+        </label>
+        <label class="row" for="sleepAtNight">
+          <span>
+            <span class="label">Sleep at night</span>
+            <span class="desc">Doze between 10 PM and 7 AM</span>
+          </span>
+          <input id="sleepAtNight" type="checkbox" role="switch">
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="system-heading">
+      <h2 id="system-heading">System</h2>
+      <div class="stack">
+        <label class="row" for="launchAtLogin">
+          <span>
+            <span class="label">Launch at login</span>
+            <span class="desc">Start Jimothy when you sign in</span>
+          </span>
+          <input id="launchAtLogin" type="checkbox" role="switch">
+        </label>
+        <div class="row">
+          <span>
+            <span class="label">Pause</span>
+            <span class="desc">Freeze him in place</span>
+          </span>
+          <button type="button" class="action" id="pauseBtn">Pause</button>
+        </div>
+        <div class="row">
+          <span>
+            <span class="label">Position</span>
+            <span class="desc">Bring him back to the center of this display</span>
+          </span>
+          <button type="button" class="action" id="resetPosition">Recenter</button>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <footer class="footer">
+    <p id="versionLine">Jimothy</p>
+    <p class="colophon">Made with &lt;3 in Seattle</p>
+  </footer>
+  <script src="./settings.js"></script>
+</body>
+</html>
