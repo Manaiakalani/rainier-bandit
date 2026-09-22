@@ -1,7 +1,7 @@
 {
   "name": "jimothy-seattle-desktop-pet",
   "version": "1.0.0",
-  "description": "Jimothy — Seattle desktop pet raccoon companion for Windows and macOS. An Emerald City taskbar trash panda who wanders, naps, and talks.",
+  "description": "Jimothy \u2014 Seattle desktop pet raccoon companion for Windows and macOS. An Emerald City taskbar trash panda who wanders, naps, and talks.",
   "keywords": [
     "jimothy",
     "seattle",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "electron": "^39.8.10",
-    "electron-builder": "^25.0.0",
+    "electron-builder": "^26.15.3",
     "esbuild": "^0.28.1",
     "playwright": "^1.63.0",
     "puppeteer": "^25.11.0",
@@ -83,7 +83,7 @@
     }
   },
   "allowScripts": {
-    "electron@33.4.11": true,
-    "esbuild@0.28.1": true
+    "esbuild@0.28.1": true,
+    "electron@39.8.10": true
   }
 }
