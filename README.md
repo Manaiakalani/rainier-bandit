@@ -8,6 +8,14 @@ Jimothy is a Seattle desktop pet and raccoon companion for **Windows** and **mac
 
 Made with &lt;3 in Seattle.
 
+## How he stays put
+
+![How Jimothy stays on the desktop: menu bar and settings talk to the main process, the isolated jimothy bridge reaches the pet overlay, and the overlay draws 512px strips and a speech scrap on the taskbar](docs/diagrams/how-jimothy-stays.png)
+
+You click him, or you use the menu bar. The menu and the settings card both talk to the main process, which keeps the always-on-top window and his settings file. Closing the card leaves him running. The overlay can reach the main process only through the isolated `jimothy` bridge. From there he plays the 512px strips, pins a paper scrap of speech over his head, and plants his feet on the taskbar. Empty pixels let the click fall through to the desktop. The pet window stays unfocused, so the app you were using keeps the keyboard.
+
+The editable drawing is [`docs/diagrams/how-jimothy-stays.excalidraw`](docs/diagrams/how-jimothy-stays.excalidraw).
+
 ## Features
 
 - Desktop overlay raccoon (jacket or fur) with small / medium / large size
@@ -36,7 +44,7 @@ npm run dist:win    # NSIS installer, from Windows
 npm run dist:mac    # DMG + zip, from macOS
 ```
 
-macOS builds must be produced on a Mac. The packaged Mac app is an agent (`LSUIElement`): no dock icon, menu-bar tray only.
+macOS builds must be produced on a Mac. The packaged Mac app is an agent (`LSUIElement`): no dock icon, menu-bar tray only. Packaging uses Electron 39 and electron-builder 26. The renderer is sandboxed, with context isolation on and Node integration off.
 
 To sign and notarize a Mac build, set these before `npm run dist:mac`:
 
