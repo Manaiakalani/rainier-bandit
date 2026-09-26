@@ -52,7 +52,10 @@
     },
     "files": [
       "dist/**/*",
-      "src/assets/**/*"
+      "src/assets/**/*",
+      "!src/assets/sprites/no_jacket",
+      "!src/assets/sprites/no_jacket/**",
+      "!src/assets/sprites/jacketed/jimothy_*.png"
     ],
     "win": {
       "target": "nsis",

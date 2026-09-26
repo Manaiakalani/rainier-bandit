@@ -21,6 +21,8 @@ export const IPC = {
   SETTINGS_CHANGED: 'settings-changed',
   OPEN_SETTINGS: 'open-settings',
   RESET_POSITION: 'reset-position',
+  WORK_AREA_CHANGED: 'work-area-changed',
+  PET_VISIBILITY: 'pet-visibility',
   GET_APP_INFO: 'get-app-info',
   CURSOR: 'cursor',
 } as const;

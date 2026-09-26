@@ -24,6 +24,8 @@ declare global {
       openSettings: () => void;
       resetPosition: () => void;
       onResetPosition: (cb: (pos: { x: number; y: number; workArea: { x: number; y: number; width: number; height: number } }) => void) => () => void;
+      onWorkAreaChanged: (cb: (pos: { x: number; y: number; workArea: { x: number; y: number; width: number; height: number } }) => void) => () => void;
+      onVisibility: (cb: (visible: boolean) => void) => () => void;
       onCursor: (cb: (pos: { x: number; y: number }) => void) => () => void;
     };
   }

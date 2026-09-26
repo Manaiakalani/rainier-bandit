@@ -1,23 +1,28 @@
 import { BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import { IPC, WINDOW_SIZE } from '../shared/constants';
-import { restPosition, windowCenter } from '../shared/layout';
+import { pinToFloor, restPosition, windowCenter } from '../shared/layout';
 import type { WorkArea } from '../shared/types';
 import { isQuitting } from './app-state';
 import { iconFile, rendererHtml, spritesDir, toFileUrl } from './paths';
 import { applyPetWindowPlatform, isMac } from './platform';
 
 let petWindow: BrowserWindow | null = null;
+let petWindowSize = WINDOW_SIZE;
 let dragTimer: ReturnType<typeof setInterval> | null = null;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
 let lastPlacedX: number | null = null;
 let lastPlacedY: number | null = null;
 let cursorTimer: ReturnType<typeof setInterval> | null = null;
+let cursorOverWindow = false;
+let displayListenersBound = false;
 
-export function createPetWindow(size = WINDOW_SIZE): BrowserWindow {
+export function createPetWindow(size = petWindowSize): BrowserWindow {
+  petWindowSize = size;
   const workArea = screen.getPrimaryDisplay().workArea;
   const start = restPosition(workArea, size);
+  bindDisplayListeners();
 
   petWindow = new BrowserWindow({
     width: size,
@@ -63,6 +68,28 @@ export function createPetWindow(size = WINDOW_SIZE): BrowserWindow {
     petWindow.webContents.openDevTools({ mode: 'detach' });
   }
 
+  petWindow.webContents.on('did-finish-load', () => {
+    const visible = Boolean(petWindow && !petWindow.isDestroyed() && petWindow.isVisible());
+    if (!visible) {
+      cursorOverWindow = false;
+      stopCursorProbe();
+    }
+    publishVisibility(visible);
+    syncPetToWorkArea();
+  });
+
+  petWindow.on('show', () => {
+    startCursorProbe();
+    publishVisibility(true);
+  });
+
+  petWindow.on('hide', () => {
+    cursorOverWindow = false;
+    stopCursorProbe();
+    publishCursor(-1, -1);
+    publishVisibility(false);
+  });
+
   petWindow.on('close', (event) => {
     if (!isQuitting()) {
       event.preventDefault();
@@ -87,17 +114,17 @@ export function showPetWindow(): void {
     petWindow.show();
     return;
   }
-  createPetWindow();
+  createPetWindow(petWindowSize);
 }
 
 export function resetPetPosition(): void {
+  showPetWindow();
   const win = getPetWindow();
   if (!win || win.isDestroyed()) return;
+  const size = win.getBounds().width || petWindowSize;
   const [wx, wy] = win.getPosition();
-  const size = win.getBounds().width || WINDOW_SIZE;
   const wa = getWorkArea(windowCenter(wx, wy, size));
   const pos = restPosition(wa, size);
-  showPetWindow();
   movePetWindow(pos.x, pos.y);
   win.webContents.send(IPC.RESET_POSITION, {
     x: pos.x,
@@ -121,14 +148,38 @@ function followCursor(): void {
   movePetWindow(p.x - dragOffsetX, p.y - dragOffsetY);
 }
 
+function publishCursor(x: number, y: number): void {
+  const win = petWindow;
+  if (!win || win.isDestroyed() || win.webContents.isLoading()) return;
+  win.webContents.send(IPC.CURSOR, { x, y });
+}
+
+function publishVisibility(visible: boolean): void {
+  const win = petWindow;
+  if (!win || win.isDestroyed() || win.webContents.isLoading()) return;
+  win.webContents.send(IPC.PET_VISIBILITY, visible);
+}
+
+function probeCursor(): void {
+  if (dragTimer || !petWindow || petWindow.isDestroyed() || !petWindow.isVisible()) return;
+  const p = screen.getCursorScreenPoint();
+  const bounds = petWindow.getContentBounds();
+  const x = p.x - bounds.x;
+  const y = p.y - bounds.y;
+  const inside = x >= 0 && y >= 0 && x < bounds.width && y < bounds.height;
+  if (!inside) {
+    if (!cursorOverWindow) return;
+    cursorOverWindow = false;
+    publishCursor(x, y);
+    return;
+  }
+  cursorOverWindow = true;
+  publishCursor(x, y);
+}
+
 function startCursorProbe(): void {
   if (cursorTimer) return;
-  cursorTimer = setInterval(() => {
-    if (dragTimer || !petWindow || petWindow.isDestroyed()) return;
-    const p = screen.getCursorScreenPoint();
-    const bounds = petWindow.getContentBounds();
-    petWindow.webContents.send(IPC.CURSOR, { x: p.x - bounds.x, y: p.y - bounds.y });
-  }, 16);
+  cursorTimer = setInterval(probeCursor, 16);
 }
 
 function stopCursorProbe(): void {
@@ -170,9 +221,10 @@ export function setPetOpacity(percent: number): void {
 }
 
 export function applyPetWindowSize(nextSize: number): void {
+  const size = Math.round(nextSize);
+  petWindowSize = size;
   const win = getPetWindow();
   if (!win || win.isDestroyed()) return;
-  const size = Math.round(nextSize);
   const bounds = win.getBounds();
   if (bounds.width === size && bounds.height === size) return;
   const nx = Math.round(bounds.x + bounds.width / 2 - size / 2);
@@ -180,6 +232,31 @@ export function applyPetWindowSize(nextSize: number): void {
   win.setBounds({ x: nx, y: ny, width: size, height: size });
   lastPlacedX = nx;
   lastPlacedY = ny;
+}
+
+export function syncPetToWorkArea(): void {
+  const win = getPetWindow();
+  if (!win || win.isDestroyed() || dragTimer) return;
+  const size = win.getBounds().width || petWindowSize;
+  const [wx, wy] = win.getPosition();
+  const wa = getWorkArea(windowCenter(wx, wy, size));
+  const pos = pinToFloor(wx, wa, size);
+  // Leave Y where it is. The renderer snaps to pos.y unless a fall is in progress.
+  movePetWindow(pos.x, wy);
+  if (win.webContents.isLoading()) return;
+  win.webContents.send(IPC.WORK_AREA_CHANGED, {
+    x: pos.x,
+    y: pos.y,
+    workArea: { x: wa.x, y: wa.y, width: wa.width, height: wa.height },
+  });
+}
+
+function bindDisplayListeners(): void {
+  if (displayListenersBound) return;
+  displayListenersBound = true;
+  screen.on('display-metrics-changed', () => syncPetToWorkArea());
+  screen.on('display-added', () => syncPetToWorkArea());
+  screen.on('display-removed', () => syncPetToWorkArea());
 }
 
 export function getWorkArea(point?: { x: number; y: number }): WorkArea {
