@@ -36,7 +36,7 @@ Settings hierarchy: name (1.25rem / 650) → section labels (11px uppercase, let
 
 ## Motion
 
-Idle, walk, run, and sleep are authored loops. Wave, sit, jump, and celebrate play once (sit holds the last pose). Extra CSS breathing is off while a loop is playing. Speech eases in 180ms ease-out, no elastic. `prefers-reduced-motion` kills extra motion.
+Idle, walk, run, and sleep are authored loops. Wave, sit, jump, and celebrate play once (sit holds the last pose). With breathing on, idle and those short poses take a slight vertical scale. Walk, run, and sleep do not, so the authored motion stays clean. Speech eases in 180ms ease-out, no elastic. `prefers-reduced-motion` kills extra motion.
 
 ## Sprite contract
 

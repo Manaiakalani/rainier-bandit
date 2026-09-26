@@ -1,3 +1,4 @@
+import { allowsBreathingScale } from '../../shared/breathing';
 import {
   DEFAULT_SPRITE_STYLE,
   FOOT_BASELINE,
@@ -239,11 +240,7 @@ export class SpriteEngine {
   }
 
   private currentBreatheScaleY(): number {
-    if (
-      this.reduceMotion
-      || !this.breathingEnabled
-      || (this.currentAnim && LOOPING_ANIMS.has(this.currentAnim.name))
-    ) {
+    if (!allowsBreathingScale(this.currentAnim?.name, this.breathingEnabled, this.reduceMotion)) {
       return 1;
     }
     const phase = (this.breathePhaseMs / this.breathePeriodMs) * Math.PI * 2;

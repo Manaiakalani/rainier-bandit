@@ -4,7 +4,8 @@ import {
   petPx,
   windowPx,
 } from '../shared/constants';
-import { petBounds, windowCenter } from '../shared/layout';
+import { clampWindowX, petBounds, windowCenter } from '../shared/layout';
+import type { WorkArea } from '../shared/types';
 import { BehaviorController } from './pet/behavior';
 import { SpriteEngine } from './pet/sprite-engine';
 import { SpeechBubble } from './ui/balloon';
@@ -19,6 +20,31 @@ async function main() {
     throw new Error('Pet canvas is missing');
   }
   const canvas = canvasEl;
+
+  let windowVisible = true;
+  let loopArmed = false;
+  let workAreaReady = false;
+  let lastTime = 0;
+  let frame = 0;
+  let pendingWorkArea: { x: number; y: number; workArea: WorkArea } | null = null;
+
+  window.jimothy.onVisibility((visible) => {
+    const wasVisible = windowVisible;
+    windowVisible = visible;
+    if (!loopArmed) return;
+    if (!visible || wasVisible) return;
+    lastTime = performance.now();
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(gameLoop);
+  });
+
+  window.jimothy.onWorkAreaChanged((payload) => {
+    if (!workAreaReady) {
+      pendingWorkArea = payload;
+      return;
+    }
+    applyWorkArea(payload);
+  });
 
   const reduceMotion = prefersReducedMotion();
   const sprite = new SpriteEngine(canvas);
@@ -99,6 +125,7 @@ async function main() {
   let pendingDown = false;
   let pendingClientX = 0;
   let pendingClientY = 0;
+  let pointerOnCanvas = false;
 
   function canvasPixelFromClient(clientX: number, clientY: number): { x: number; y: number } {
     const rect = canvas.getBoundingClientRect();
@@ -180,9 +207,19 @@ async function main() {
     window.jimothy.showContextMenu();
   });
 
+  function clientOnCanvas(x: number, y: number): boolean {
+    const rect = canvas.getBoundingClientRect();
+    return x >= rect.left && y >= rect.top && x < rect.right && y < rect.bottom;
+  }
+
   window.jimothy.onCursor(({ x, y }) => {
+    pointerOnCanvas = clientOnCanvas(x, y);
     if (isDragging || pendingDown) {
       setIgnoreMouse(false);
+      return;
+    }
+    if (!pointerOnCanvas) {
+      setIgnoreMouse(true);
       return;
     }
     const pixel = canvasPixelFromClient(x, y);
@@ -213,9 +250,26 @@ async function main() {
     lastSentY = null;
   });
 
-  let lastTime = performance.now();
+  function applyWorkArea(payload: { x: number; y: number; workArea: WorkArea }): void {
+    updateBounds(payload.workArea);
+    const state = behavior.getState();
+    if (state.mode === 'dragging') return;
+    if (state.mode === 'falling') {
+      const clampedX = clampWindowX(state.x, payload.workArea, windowPx(settings.petScale));
+      behavior.setPosition(clampedX, state.y);
+      lastSentX = clampedX;
+      lastSentY = state.y;
+      window.jimothy.moveWindow(clampedX, state.y);
+      return;
+    }
+    behavior.setPosition(payload.x, payload.y);
+    lastSentX = payload.x;
+    lastSentY = payload.y;
+    window.jimothy.moveWindow(payload.x, payload.y);
+  }
 
   function gameLoop(now: number) {
+    if (!windowVisible) return;
     const deltaMs = Math.max(0, Math.min(now - lastTime, MAX_FRAME_DELTA_MS));
     lastTime = now;
 
@@ -225,7 +279,7 @@ async function main() {
     }
 
     const state = behavior.getState();
-    sprite.render({ captureHit: !isDragging });
+    sprite.render({ captureHit: pointerOnCanvas && !isDragging });
 
     if (!isPaused && !isDragging) {
       const targetX = state.x;
@@ -237,9 +291,14 @@ async function main() {
       }
     }
 
+    frame = requestAnimationFrame(gameLoop);
+  }
 
-
-    requestAnimationFrame(gameLoop);
+  workAreaReady = true;
+  if (pendingWorkArea) {
+    const queued = pendingWorkArea;
+    pendingWorkArea = null;
+    applyWorkArea(queued);
   }
 
   sprite.play('idle');
@@ -247,7 +306,9 @@ async function main() {
     bubble.show("Hi! I'm Jimothy.", 3000);
     void window.jimothy.updateSettings({ greeted: true });
   }
-  requestAnimationFrame(gameLoop);
+  lastTime = performance.now();
+  loopArmed = true;
+  if (windowVisible) frame = requestAnimationFrame(gameLoop);
 }
 
 main().catch((err) => {

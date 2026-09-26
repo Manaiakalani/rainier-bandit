@@ -81,6 +81,18 @@ contextBridge.exposeInMainWorld('jimothy', {
     return () => ipcRenderer.removeListener(IPC.RESET_POSITION, handler);
   },
 
+  onWorkAreaChanged: (cb: (pos: { x: number; y: number; workArea: { x: number; y: number; width: number; height: number } }) => void) => {
+    const handler = (_event: unknown, pos: { x: number; y: number; workArea: { x: number; y: number; width: number; height: number } }) => cb(pos);
+    ipcRenderer.on(IPC.WORK_AREA_CHANGED, handler);
+    return () => ipcRenderer.removeListener(IPC.WORK_AREA_CHANGED, handler);
+  },
+
+  onVisibility: (cb: (visible: boolean) => void) => {
+    const handler = (_event: unknown, visible: boolean) => cb(visible);
+    ipcRenderer.on(IPC.PET_VISIBILITY, handler);
+    return () => ipcRenderer.removeListener(IPC.PET_VISIBILITY, handler);
+  },
+
   onCursor: (cb: (pos: { x: number; y: number }) => void) => {
     const handler = (_event: unknown, pos: { x: number; y: number }) => cb(pos);
     ipcRenderer.on(IPC.CURSOR, handler);

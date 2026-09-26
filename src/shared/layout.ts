@@ -34,3 +34,19 @@ export function windowCenter(x: number, y: number, windowSize = WINDOW_SIZE): { 
     y: y + windowSize / 2,
   };
 }
+
+/** Clamp a window origin into the work area, including when the window is wider than that area. */
+export function clampWindowX(x: number, workArea: WorkArea, windowSize = WINDOW_SIZE): number {
+  const bounds = petBounds(workArea, windowSize);
+  const lo = Math.min(bounds.minX, bounds.maxX);
+  const hi = Math.max(bounds.minX, bounds.maxX);
+  return Math.min(hi, Math.max(lo, Math.round(x)));
+}
+
+/** Keep the window on the display that holds `x`, with feet on that work-area floor. */
+export function pinToFloor(x: number, workArea: WorkArea, windowSize = WINDOW_SIZE): { x: number; y: number } {
+  return {
+    x: clampWindowX(x, workArea, windowSize),
+    y: groundYFor(workArea, windowSize),
+  };
+}

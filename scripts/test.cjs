@@ -4,7 +4,8 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { normalizeSettings, isPartialSettings } = require('../dist/shared/settings-normalize.js');
 const { clamp, isSleepTime, wanderTuning } = require('../dist/shared/behavior-utils.js');
-const { petBounds, restPosition, windowCenter } = require('../dist/shared/layout.js');
+const { petBounds, pinToFloor, restPosition, windowCenter } = require('../dist/shared/layout.js');
+const { allowsBreathingScale } = require('../dist/shared/breathing.js');
 const { DEFAULT_SETTINGS, TASKBAR_TUCK, WINDOW_SIZE } = require('../dist/shared/constants.js');
 
 test('normalizeSettings fills defaults and coerces types', () => {
@@ -53,4 +54,26 @@ test('layout helpers pin Jimothy to the work-area floor', () => {
   assert.deepEqual(windowCenter(10, 20, 100), { x: 60, y: 70 });
   assert.equal(clamp(12, 0, 10), 10);
   assert.equal(clamp(-2, 0, 10), 0);
+});
+
+test('pinToFloor keeps x on the display and drops y to the taskbar', () => {
+  const wa = { x: 100, y: 50, width: 1000, height: 800 };
+  const pinned = pinToFloor(1200, wa, WINDOW_SIZE);
+  assert.equal(pinned.y, 50 + 800 - WINDOW_SIZE + TASKBAR_TUCK);
+  assert.equal(pinned.x, 100 + 1000 - WINDOW_SIZE);
+  assert.equal(pinToFloor(40, wa, WINDOW_SIZE).x, 100);
+  const narrow = { x: 0, y: 0, width: 100, height: 400 };
+  assert.equal(pinToFloor(80, narrow, WINDOW_SIZE).x, 0);
+});
+
+test('breathing scale stays off for authored walk, run, and sleep', () => {
+  assert.equal(allowsBreathingScale('idle', true, false), true);
+  assert.equal(allowsBreathingScale('sit', true, false), true);
+  assert.equal(allowsBreathingScale('paw_wave', true, false), true);
+  assert.equal(allowsBreathingScale('walk', true, false), false);
+  assert.equal(allowsBreathingScale('run', true, false), false);
+  assert.equal(allowsBreathingScale('sleep', true, false), false);
+  assert.equal(allowsBreathingScale('idle', false, false), false);
+  assert.equal(allowsBreathingScale('idle', true, true), false);
+  assert.equal(allowsBreathingScale(null, true, false), false);
 });

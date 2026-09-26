@@ -2,6 +2,7 @@
 
 Live runtime sheets are `jacketed/` and `non-jacketed/` (Master Package, 512px cells).
 `no_jacket/` is unused inventory. Walk/run currently play 4 poses (one gait cycle).
+The installer ships the live strips only. `no_jacket/` and the jacketed `jimothy_*.png` masters stay in the repo and are left out of the electron-builder package.
 
 Character design: Jimothy — a compact, round, short-spined Seattle raccoon mascot.
 
