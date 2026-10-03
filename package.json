@@ -1,18 +1,23 @@
 {
   "name": "jimothy-seattle-desktop-pet",
   "version": "1.0.0",
-  "description": "Jimothy \u2014 Seattle desktop pet raccoon companion for Windows and macOS. An Emerald City taskbar trash panda who wanders, naps, and talks.",
+  "description": "Jimothy, a Seattle desktop pet raccoon for Windows and macOS. Rainier Bandit is the Emerald City taskbar trash panda who wanders, naps, and talks.",
   "keywords": [
     "jimothy",
+    "rainier bandit",
     "seattle",
     "desktop pet",
     "raccoon",
+    "desktop mascot",
+    "virtual pet",
     "companion",
     "electron",
     "mascot",
     "taskbar",
     "desktop companion",
-    "trash panda"
+    "trash panda",
+    "windows",
+    "macos"
   ],
   "main": "dist/main/main.js",
   "author": "Manaiakalani",
