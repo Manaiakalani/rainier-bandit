@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jimothy, Seattle desktop pet raccoon</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; font-family: "Segoe UI", "Avenir Next", sans-serif; background: #8a9aa8; }
+    .desktop {
+      position: relative;
+      width: 800px;
+      height: 450px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #6b7c8a 0%, #8a9aa8 38%, #b7c4ce 70%, #cfd8df 100%);
+    }
+    .mist {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 18%, rgba(255,255,255,0.28), transparent 52%);
+      pointer-events: none;
+    }
+    #rain { position: absolute; inset: 0; width: 800px; height: 450px; pointer-events: none; }
+    .icons {
+      position: absolute; left: 14px; top: 12px; color: #f4f7fa;
+      font-size: 12px; line-height: 1.65;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+    #pet {
+      position: absolute;
+      width: 210px; height: 210px;
+      filter: drop-shadow(0 8px 12px rgba(20,24,28,0.35));
+    }
+    .bubble {
+      position: absolute;
+      background: #faf6ee; color: #2c2420;
+      border: 1.5px solid #4a3728; border-radius: 16px;
+      padding: 7px 12px; font-size: 15px; white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(44,36,32,0.2);
+      transform: translateX(-50%);
+    }
+    .bubble::after {
+      content: ''; position: absolute; left: 50%; bottom: -9px;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent; border-right: 8px solid transparent;
+      border-top: 10px solid #faf6ee;
+    }
+    .bubble::before {
+      content: ''; position: absolute; left: 50%; bottom: -11px;
+      transform: translateX(-50%);
+      border-left: 9px solid transparent; border-right: 9px solid transparent;
+      border-top: 11px solid #4a3728;
+    }
+    .brand {
+      position: absolute; right: 14px; bottom: 46px; color: rgba(255,255,255,0.9);
+      font-size: 12px; letter-spacing: 0.03em; text-align: right;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    }
+    .taskbar {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 36px;
+      background: rgba(32, 36, 40, 0.88);
+      display: flex; align-items: center; justify-content: center;
+      color: #e8eef2; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="desktop" id="stage">
+    <div class="mist"></div>
+    <canvas id="rain" width="800" height="450"></canvas>
+    <div class="icons">Recycle Bin<br>Projects<br>coffee.txt</div>
+    <canvas id="pet" width="210" height="210"></canvas>
+    <div class="bubble" id="bubble" hidden>Classic Seattle drizzle.</div>
+    <div class="brand">Jimothy, Seattle desktop pet</div>
+    <div class="taskbar">9:21 AM · Seattle</div>
+  </div>
+  <script>
+    const CELL = 512;
+    const SIZE = 210;
+    const STAGE_W = 800;
+    const TASKBAR = 36;
+    const SHEETS = {
+      idle: { src: '../../src/assets/sprites/jacketed/idle.png', frameMs: [900, 900, 900, 90, 90, 120, 900, 900] },
+      walk: { src: '../../src/assets/sprites/jacketed/walk-right.png', frameMs: [250, 250, 250, 250] },
+      wave: { src: '../../src/assets/sprites/jacketed/wave.png', frameMs: [125, 125, 125, 125, 125, 125, 125, 125] },
+    };
+    const RAIN = Array.from({ length: 14 }, (_, i) => ({
+      x: (i * 67 + 18) % STAGE_W,
+      y: (i * 41) % 450,
+      len: 8 + (i % 4) * 3,
+      speed: 70 + (i % 5) * 16,
+    }));
+    const images = {};
+    const pet = document.getElementById('pet');
+    const petCtx = pet.getContext('2d');
+    const rain = document.getElementById('rain');
+    const rainCtx = rain.getContext('2d');
+    const bubble = document.getElementById('bubble');
+
+    function frameIndex(elapsed, frameMs, loop) {
+      const total = frameMs.reduce((sum, ms) => sum + ms, 0);
+      let t = loop ? ((elapsed % total) + total) % total : Math.min(elapsed, total - 1);
+      if (!loop && elapsed >= total) return frameMs.length - 1;
+      for (let i = 0; i < frameMs.length; i++) {
+        if (t < frameMs[i]) return i;
+        t -= frameMs[i];
+      }
+      return frameMs.length - 1;
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * Math.max(0, Math.min(1, t));
+    }
+
+    function sceneAt(ms) {
+      if (ms < 1400) {
+        return {
+          pose: 'walk',
+          elapsed: ms,
+          loop: true,
+          x: lerp(-70, 295, ms / 1400),
+          quip: ms > 350 ? 'Coffee first. Then crimes.' : '',
+        };
+      }
+      if (ms < 1650) {
+        return { pose: 'idle', elapsed: 0, loop: false, x: 295, quip: 'Coffee first. Then crimes.' };
+      }
+      if (ms < 2650) {
+        return { pose: 'wave', elapsed: ms - 1650, loop: false, x: 295, quip: 'Coffee first. Then crimes.' };
+      }
+      return { pose: 'idle', elapsed: ms, loop: true, x: 295, quip: 'Classic Seattle drizzle.' };
+    }
+
+    function drawRain(ms) {
+      rainCtx.clearRect(0, 0, STAGE_W, 450);
+      rainCtx.strokeStyle = 'rgba(255,255,255,0.45)';
+      rainCtx.lineWidth = 1.2;
+      for (const drop of RAIN) {
+        const y = (drop.y + (ms * drop.speed) / 1000) % 480 - 20;
+        rainCtx.beginPath();
+        rainCtx.moveTo(drop.x, y);
+        rainCtx.lineTo(drop.x - 2, y + drop.len);
+        rainCtx.stroke();
+      }
+    }
+
+    window.renderAt = function renderAt(ms) {
+      const scene = sceneAt(ms);
+      const sheet = SHEETS[scene.pose];
+      const frame = frameIndex(scene.elapsed, sheet.frameMs, scene.loop);
+      pet.style.left = scene.x + 'px';
+      pet.style.bottom = (TASKBAR - 18) + 'px';
+      petCtx.clearRect(0, 0, SIZE, SIZE);
+      const img = images[scene.pose];
+      if (img) {
+        petCtx.drawImage(img, frame * CELL, 0, CELL, CELL, 0, 0, SIZE, SIZE);
+      }
+      if (scene.quip) {
+        bubble.hidden = false;
+        bubble.textContent = scene.quip;
+        const anchor = Math.min(STAGE_W - 150, Math.max(150, scene.x + SIZE / 2));
+        bubble.style.left = anchor + 'px';
+        bubble.style.bottom = (TASKBAR - 18 + SIZE + 4) + 'px';
+      } else {
+        bubble.hidden = true;
+      }
+      drawRain(ms);
+    };
+
+    Promise.all(Object.entries(SHEETS).map(([name, sheet]) => new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => { images[name] = img; resolve(); };
+      img.onerror = reject;
+      img.src = sheet.src;
+    }))).then(() => {
+      window.spritesReady = true;
+      window.renderAt(0);
+    });
+  </script>
+</body>
+</html>

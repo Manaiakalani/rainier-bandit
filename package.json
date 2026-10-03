@@ -33,6 +33,7 @@
     "build": "npm run build:main && npm run build:preload && npm run build:renderer && npm run build:settings && npm run copy:renderer",
     "test": "npm run build:main && npm run build:preload && npm run build:settings && node --test scripts/test.cjs",
     "screenshots": "node scripts/capture-screenshots.mjs",
+    "gif": "node scripts/capture-gif.mjs",
     "start": "npm run build && electron .",
     "dev": "npm run build && electron . --dev",
     "pack": "npm run build && electron-builder --dir",

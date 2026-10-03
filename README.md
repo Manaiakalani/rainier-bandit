@@ -6,6 +6,8 @@ Jimothy is a free, open source Seattle desktop pet and raccoon companion for **W
 
 This repo is named Rainier Bandit, for the mountain, the beer, and the masked raccoon on the taskbar. Empty pixels are click-through, and the pet window stays unfocused, so the app you were using keeps the keyboard.
 
+![Jimothy, a Seattle desktop pet raccoon, walks across a rainy desktop, waves, and talks about coffee and drizzle](docs/screenshots/jimothy-drizzle.gif)
+
 ![Jimothy, a Seattle desktop pet raccoon companion, standing on a rainy desktop](docs/screenshots/desktop-puppeteer.png)
 
 Made with &lt;3 in Seattle.
