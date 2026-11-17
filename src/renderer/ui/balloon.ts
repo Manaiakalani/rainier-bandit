@@ -27,14 +27,14 @@ export class SpeechBubble {
     if (this.reduceMotion) {
       this.el.style.transition = 'none';
       this.el.style.opacity = '1';
-      this.el.style.transform = 'translateX(-50%) translateY(0)';
+      this.el.style.transform = 'translateX(-50%) rotate(-1.25deg)';
     } else {
       this.el.style.opacity = '0';
-      this.el.style.transform = 'translateX(-50%) translateY(6px)';
+      this.el.style.transform = 'translateX(-50%) rotate(-1.25deg) translateY(6px)';
       requestAnimationFrame(() => {
         this.el.style.transition = 'opacity 180ms ease-out, transform 180ms ease-out';
         this.el.style.opacity = '1';
-        this.el.style.transform = 'translateX(-50%) translateY(0)';
+        this.el.style.transform = 'translateX(-50%) rotate(-1.25deg)';
       });
     }
 
@@ -50,7 +50,7 @@ export class SpeechBubble {
     }
     this.el.style.transition = 'opacity 220ms ease-out, transform 220ms ease-out';
     this.el.style.opacity = '0';
-    this.el.style.transform = 'translateX(-50%) translateY(6px)';
+    this.el.style.transform = 'translateX(-50%) rotate(-1.25deg) translateY(6px)';
     this.fadeTimer = setTimeout(() => {
       this.el.style.display = 'none';
       this.el.hidden = true;

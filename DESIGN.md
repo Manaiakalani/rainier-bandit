@@ -32,7 +32,9 @@ Native stacks with a slightly friendlier installed face, not a downloaded displa
 
 `Avenir Next, Segoe UI Variable, Segoe UI, Trebuchet MS, sans-serif`
 
-Settings hierarchy: name (1.25rem / 650) → section labels (11px uppercase, letterspaced) → row labels (15px) → descriptions (12px, ink-soft).
+Settings hierarchy: name (1.25rem / 650) → section labels (13px, sentence case, the body face) → row labels (15px) → descriptions (12px, ink-soft).
+
+Speech stays on the light paper scrap in both themes, so it still reads on a dark wallpaper. The scrap sits a degree off square.
 
 ## Motion
 

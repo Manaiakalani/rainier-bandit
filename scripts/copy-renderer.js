@@ -8,6 +8,6 @@ const destDir = path.join(__dirname, '..', 'dist', 'renderer');
 
 fs.mkdirSync(destDir, { recursive: true });
 
-for (const name of ['index.html', 'settings.html', 'theme.css', 'settings.css', 'pet.css']) {
+for (const name of ['index.html', 'settings.html', 'tokens.css', 'theme.css', 'settings.css', 'pet.css']) {
   fs.copyFileSync(path.join(srcDir, name), path.join(destDir, name));
 }
