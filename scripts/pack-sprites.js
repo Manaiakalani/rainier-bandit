@@ -120,7 +120,6 @@ function keepLargestBlob(data, width, height) {
   let best = 0;
   let bestSize = 0;
   const stack = [];
-  const idx = (x, y) => y * width + x;
   for (let start = 0; start < n; start++) {
     if (data[start * 4 + 3] < 20 || seen[start] !== -1) continue;
     const id = sizes.length;
@@ -266,11 +265,9 @@ async function writeStrip(frames, dest) {
 (async () => {
   const frontGuide = await guideFrom(path.join(LOCK, 'jimothy-front.png'), true);
   const frontH = frontGuide.h;
-  const sideH = 470;
   const lockFitted = await keyAndFit(path.join(LOCK, 'jimothy-front.png'), frontH, { chroma: false });
 
   const front = async (name) => keyAndFit(path.join(IMG, name), frontH);
-  const side = async (name) => keyAndFit(path.join(IMG, name), sideH);
 
   const idle = [lockFitted, lockFitted, lockFitted, lockFitted, lockFitted, lockFitted];
   const blink = [lockFitted, await front('6.jpg'), await front('8.jpg')];

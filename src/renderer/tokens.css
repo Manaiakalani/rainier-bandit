@@ -1,0 +1,45 @@
+/* Hallmark · checked: 2026-11-17 · genre: playful (inferred)
+ * floor: 0 FAIL · fixed: 7a, 20, 34, 48 · reflex: 24b, 26b
+ * built: the project · redesign: polish · v2.0.0
+ * shape: app screen */
+:root {
+  --paper: #f6f0e6;
+  --paper-deep: #efe4d4;
+  --ink: #2c2420;
+  --ink-soft: #5a4d43;
+  --rule: #d8cbb8;
+  --amber: #8b5e3c;
+  --amber-hot: #a56c44;
+  --cream: #faf6ee;
+  --knob: #f4efe4;
+  --knob-shadow: 0 1px 3px rgba(44, 36, 32, 0.28);
+  --shadow: 0 8px 20px rgba(44, 36, 32, 0.14);
+  --focus: 0 0 0 3px rgba(139, 94, 60, 0.35);
+  --selection: rgba(139, 94, 60, 0.28);
+  --speech-fill: #faf6ee;
+  --speech-ink: #2c2420;
+  --speech-edge: #4a3728;
+  --speech-shadow: 0 3px 8px rgba(44, 36, 32, 0.2);
+  --boot: #8b3a2a;
+  --radius: 12px;
+  --font: "Avenir Next", "Segoe UI Variable", "Segoe UI", "Trebuchet MS", sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1c1916;
+    --paper-deep: #141210;
+    --ink: #f3ead8;
+    --ink-soft: #c4b8a8;
+    --rule: #3f3830;
+    --amber: #c48a5a;
+    --amber-hot: #d7a06c;
+    --cream: #2a2520;
+    --knob: #f3ead8;
+    --knob-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    --focus: 0 0 0 3px rgba(196, 138, 90, 0.45);
+    --selection: rgba(196, 138, 90, 0.35);
+  }
+}

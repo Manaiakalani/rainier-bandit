@@ -1,11 +1,12 @@
 import { BrowserWindow, screen } from 'electron';
-import * as path from 'path';
 import { IPC, WINDOW_SIZE } from '../shared/constants';
 import { pinToFloor, restPosition, windowCenter } from '../shared/layout';
 import type { WorkArea } from '../shared/types';
+import { rendererUrl } from './app-url';
 import { isQuitting } from './app-state';
-import { iconFile, rendererHtml, spritesDir, toFileUrl } from './paths';
-import { applyPetWindowPlatform, isMac } from './platform';
+import { iconFile } from './paths';
+import { applyPetWindowPlatform, isDev, isMac } from './platform';
+import { petWebPreferences } from './security';
 
 let petWindow: BrowserWindow | null = null;
 let petWindowSize = WINDOW_SIZE;
@@ -18,7 +19,15 @@ let cursorTimer: ReturnType<typeof setInterval> | null = null;
 let cursorOverWindow = false;
 let displayListenersBound = false;
 
+export function revealPet(win: BrowserWindow): void {
+  if (win.isDestroyed()) return;
+  win.setFocusable(false);
+  if (!win.isVisible()) win.showInactive();
+  win.blur();
+}
+
 export function createPetWindow(size = petWindowSize): BrowserWindow {
+  if (petWindow && !petWindow.isDestroyed()) return petWindow;
   petWindowSize = size;
   const workArea = screen.getPrimaryDisplay().workArea;
   const start = restPosition(workArea, size);
@@ -29,6 +38,7 @@ export function createPetWindow(size = petWindowSize): BrowserWindow {
     height: size,
     x: start.x,
     y: start.y,
+    show: false,
     frame: false,
     transparent: true,
     backgroundColor: '#00000000',
@@ -44,29 +54,21 @@ export function createPetWindow(size = petWindowSize): BrowserWindow {
     acceptFirstMouse: true,
     icon: iconFile(),
     ...(isMac ? { type: 'panel' as const, hiddenInMissionControl: true } : {}),
-    webPreferences: {
-      preload: path.join(__dirname, '..', 'preload', 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: true,
-      backgroundThrottling: false,
-    },
+    webPreferences: petWebPreferences(),
   });
 
   petWindow.setIgnoreMouseEvents(true, { forward: true });
   applyPetWindowPlatform(petWindow);
   startCursorProbe();
-  petWindow.loadFile(rendererHtml('index.html'), {
-    query: { sprites: toFileUrl(spritesDir()) },
-  });
+  petWindow.loadURL(rendererUrl('index.html'));
 
-  petWindow.webContents.on('console-message', (_event, _level, message) => {
-    console.log('[renderer]', message);
-  });
-
-  if (process.argv.includes('--dev')) {
+  if (isDev()) {
     petWindow.webContents.openDevTools({ mode: 'detach' });
   }
+
+  petWindow.once('ready-to-show', () => {
+    if (petWindow && !petWindow.isDestroyed()) revealPet(petWindow);
+  });
 
   petWindow.webContents.on('did-finish-load', () => {
     const visible = Boolean(petWindow && !petWindow.isDestroyed() && petWindow.isVisible());
@@ -79,6 +81,8 @@ export function createPetWindow(size = petWindowSize): BrowserWindow {
   });
 
   petWindow.on('show', () => {
+    petWindow?.setFocusable(false);
+    petWindow?.blur();
     startCursorProbe();
     publishVisibility(true);
   });
@@ -102,6 +106,7 @@ export function createPetWindow(size = petWindowSize): BrowserWindow {
     petWindow = null;
   });
 
+  revealPet(petWindow);
   return petWindow;
 }
 
@@ -111,7 +116,7 @@ export function getPetWindow(): BrowserWindow | null {
 
 export function showPetWindow(): void {
   if (petWindow && !petWindow.isDestroyed()) {
-    petWindow.show();
+    revealPet(petWindow);
     return;
   }
   createPetWindow(petWindowSize);
@@ -135,12 +140,32 @@ export function resetPetPosition(): void {
 
 export function movePetWindow(x: number, y: number): void {
   if (!petWindow || petWindow.isDestroyed()) return;
-  const nx = Math.round(x);
-  const ny = Math.round(y);
-  if (nx === lastPlacedX && ny === lastPlacedY) return;
-  lastPlacedX = nx;
-  lastPlacedY = ny;
-  petWindow.setPosition(nx, ny, false);
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+  const placed = clampToDisplays(x, y, petWindowSize);
+  if (placed.x === lastPlacedX && placed.y === lastPlacedY) return;
+  lastPlacedX = placed.x;
+  lastPlacedY = placed.y;
+  petWindow.setPosition(placed.x, placed.y, false);
+}
+
+function clampToDisplays(x: number, y: number, size: number): { x: number; y: number } {
+  const displays = screen.getAllDisplays();
+  if (displays.length === 0) return { x: Math.round(x), y: Math.round(y) };
+  let minX = Number.POSITIVE_INFINITY;
+  let minY = Number.POSITIVE_INFINITY;
+  let maxX = Number.NEGATIVE_INFINITY;
+  let maxY = Number.NEGATIVE_INFINITY;
+  for (const display of displays) {
+    const bounds = display.bounds;
+    minX = Math.min(minX, bounds.x - size);
+    minY = Math.min(minY, bounds.y - size);
+    maxX = Math.max(maxX, bounds.x + bounds.width);
+    maxY = Math.max(maxY, bounds.y + bounds.height);
+  }
+  return {
+    x: Math.round(Math.min(maxX, Math.max(minX, x))),
+    y: Math.round(Math.min(maxY, Math.max(minY, y))),
+  };
 }
 
 function followCursor(): void {
@@ -208,6 +233,7 @@ export function endPetDrag(): { x: number; y: number } {
   followCursor();
   const win = getPetWindow();
   if (win && !win.isDestroyed()) {
+    win.setIgnoreMouseEvents(true, { forward: true });
     const [x, y] = win.getPosition();
     return { x, y };
   }
@@ -241,7 +267,6 @@ export function syncPetToWorkArea(): void {
   const [wx, wy] = win.getPosition();
   const wa = getWorkArea(windowCenter(wx, wy, size));
   const pos = pinToFloor(wx, wa, size);
-  // Leave Y where it is. The renderer snaps to pos.y unless a fall is in progress.
   movePetWindow(pos.x, wy);
   if (win.webContents.isLoading()) return;
   win.webContents.send(IPC.WORK_AREA_CHANGED, {

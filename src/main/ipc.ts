@@ -1,49 +1,75 @@
-import { app, ipcMain, Menu } from 'electron';
-import { APP_VERSION, IPC } from '../shared/constants';
+import { app, ipcMain, Menu, type IpcMainEvent, type IpcMainInvokeEvent } from 'electron';
+import { IPC } from '../shared/constants';
 import { getIsNapping, getIsPaused, requestQuit } from './app-state';
 import { applyNap, applyPause } from './pause';
+import { isTrustedSender } from './security';
 import { getSettings, updateSettings } from './settings';
 import { openSettingsWindow } from './settings-window';
 import { endPetDrag, getPetWindow, getWorkArea, movePetWindow, resetPetPosition, startPetDrag } from './window';
 
+function trusted(event: IpcMainEvent | IpcMainInvokeEvent): boolean {
+  return isTrustedSender(event.sender, event.senderFrame);
+}
+
+function on(channel: string, listener: (event: IpcMainEvent, ...args: unknown[]) => void): void {
+  ipcMain.on(channel, (event, ...args) => {
+    if (!trusted(event)) return;
+    listener(event, ...args);
+  });
+}
+
+function handle(channel: string, listener: (event: IpcMainInvokeEvent, ...args: unknown[]) => unknown): void {
+  ipcMain.handle(channel, (event, ...args) => {
+    if (!trusted(event)) return null;
+    return listener(event, ...args);
+  });
+}
+
+function readPoint(value: unknown): { x: number; y: number } | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const point = value as { x?: unknown; y?: unknown };
+  if (typeof point.x !== 'number' || typeof point.y !== 'number') return undefined;
+  if (!Number.isFinite(point.x) || !Number.isFinite(point.y)) return undefined;
+  return { x: point.x, y: point.y };
+}
+
 export function registerIpcHandlers(): void {
-  ipcMain.on(IPC.SET_IGNORE_MOUSE, (_event, ignore: unknown) => {
+  on(IPC.SET_IGNORE_MOUSE, (_event, ignore: unknown) => {
     const win = getPetWindow();
     if (!win || win.isDestroyed()) return;
-    if (ignore) {
+    if (ignore === true) {
       win.setIgnoreMouseEvents(true, { forward: true });
-    } else {
+    } else if (ignore === false) {
       win.setIgnoreMouseEvents(false);
     }
   });
 
-  ipcMain.on(IPC.MOVE_WINDOW, (_event, x: unknown, y: unknown) => {
+  on(IPC.MOVE_WINDOW, (_event, x: unknown, y: unknown) => {
     if (typeof x !== 'number' || typeof y !== 'number') return;
-    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
     movePetWindow(x, y);
   });
 
-  ipcMain.on(IPC.START_DRAG, () => {
+  on(IPC.START_DRAG, () => {
     startPetDrag();
   });
 
-  ipcMain.handle(IPC.END_DRAG, () => endPetDrag());
+  handle(IPC.END_DRAG, () => endPetDrag());
 
-  ipcMain.handle(IPC.GET_WORK_AREA, (_event, point?: { x: number; y: number }) => {
-    const wa = getWorkArea(point);
+  handle(IPC.GET_WORK_AREA, (_event, point?: unknown) => {
+    const wa = getWorkArea(readPoint(point));
     return { x: wa.x, y: wa.y, width: wa.width, height: wa.height };
   });
 
-  ipcMain.handle(IPC.GET_PAUSE_STATE, () => getIsPaused());
+  handle(IPC.GET_PAUSE_STATE, () => getIsPaused());
 
-  ipcMain.handle(IPC.GET_NAP_STATE, () => getIsNapping());
+  handle(IPC.GET_NAP_STATE, () => getIsNapping());
 
-  ipcMain.on(IPC.TOGGLE_NAP, (_event, napState?: unknown) => {
+  on(IPC.TOGGLE_NAP, (_event, napState?: unknown) => {
     const next = typeof napState === 'boolean' ? napState : !getIsNapping();
     applyNap(next);
   });
 
-  ipcMain.handle(IPC.GET_WINDOW_POS, () => {
+  handle(IPC.GET_WINDOW_POS, () => {
     const win = getPetWindow();
     if (win && !win.isDestroyed()) {
       const [x, y] = win.getPosition();
@@ -52,17 +78,17 @@ export function registerIpcHandlers(): void {
     return { x: 0, y: 0 };
   });
 
-  ipcMain.handle(IPC.GET_APP_INFO, () => ({
-    version: app.isPackaged ? app.getVersion() : APP_VERSION,
+  handle(IPC.GET_APP_INFO, () => ({
+    version: app.getVersion(),
     platform: process.platform,
   }));
 
-  ipcMain.on(IPC.TOGGLE_PAUSE, (_event, pausedState?: unknown) => {
+  on(IPC.TOGGLE_PAUSE, (_event, pausedState?: unknown) => {
     const nextPaused = typeof pausedState === 'boolean' ? pausedState : !getIsPaused();
     applyPause(nextPaused);
   });
 
-  ipcMain.on(IPC.SHOW_CONTEXT_MENU, () => {
+  on(IPC.SHOW_CONTEXT_MENU, () => {
     const win = getPetWindow();
     if (!win || win.isDestroyed()) return;
 
@@ -87,30 +113,26 @@ export function registerIpcHandlers(): void {
       { type: 'separator' },
       {
         label: 'Quit Jimothy',
-        accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Alt+F4',
         click: () => requestQuit(),
       },
     ]);
+    const releaseFocus = (): void => {
+      if (win.isDestroyed()) return;
+      win.setFocusable(false);
+      win.blur();
+    };
+    menu.once('menu-will-close', releaseFocus);
     win.setFocusable(true);
-    menu.popup({
-      window: win,
-      callback: () => {
-        if (!win.isDestroyed()) win.setFocusable(false);
-      },
-    });
+    menu.popup({ window: win });
   });
 
-  ipcMain.handle(IPC.GET_SETTINGS, () => getSettings());
+  handle(IPC.GET_SETTINGS, () => getSettings());
 
-  ipcMain.handle(IPC.UPDATE_SETTINGS, (_event, partial: unknown) => {
-    return updateSettings(partial);
-  });
+  handle(IPC.UPDATE_SETTINGS, (_event, partial: unknown) => updateSettings(partial));
 
-  ipcMain.on(IPC.OPEN_SETTINGS, () => openSettingsWindow());
+  on(IPC.OPEN_SETTINGS, () => openSettingsWindow());
 
-  ipcMain.on(IPC.QUIT_APP, () => requestQuit());
-
-  ipcMain.on(IPC.RESET_POSITION, () => {
+  on(IPC.RESET_POSITION, () => {
     resetPetPosition();
   });
 }

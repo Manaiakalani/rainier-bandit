@@ -39,12 +39,11 @@ const HERO_FRAMES: Record<string, number> = {
   paw_wave: 2,
   sit: 3,
   sleep: 3,
-  blink: 0,
 };
 const DEFAULT_HERO_FRAME = 0;
 
 const LOOPING_ANIMS = new Set<string>(['idle', 'walk', 'run', 'sleep']);
-const PLAY_ONCE_ANIMS = new Set<string>(['blink', 'paw_wave', 'sit', 'startled', 'happy_bounce']);
+const PLAY_ONCE_ANIMS = new Set<string>(['paw_wave', 'sit', 'startled', 'happy_bounce']);
 
 export class SpriteEngine {
   private canvas: HTMLCanvasElement;

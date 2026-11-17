@@ -21,6 +21,13 @@ const controls = {
   portrait: $<HTMLImageElement>('portrait'),
 };
 
+function assetUrl(file: string): string {
+  if (window.location.protocol === 'jimothy:') {
+    return new URL(`../assets/${file}`, window.location.href).href;
+  }
+  return `../../src/assets/${file}`;
+}
+
 function setSeg(id: string, value: string): void {
   const group = $(id);
   Array.from(group.querySelectorAll<HTMLButtonElement>('.seg-btn')).forEach((btn) => {
@@ -29,7 +36,23 @@ function setSeg(id: string, value: string): void {
 }
 
 function bindSeg(id: string, onPick: (value: string) => void): void {
-  $(id).addEventListener('click', (event) => {
+  const group = $(id);
+  group.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+      return;
+    }
+    const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>('.seg-btn'));
+    if (buttons.length === 0) return;
+    const current = buttons.findIndex((btn) => btn.getAttribute('aria-pressed') === 'true');
+    const delta = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1;
+    const next = buttons[(current + delta + buttons.length) % buttons.length];
+    if (!next?.dataset.value) return;
+    event.preventDefault();
+    setSeg(id, next.dataset.value);
+    next.focus();
+    onPick(next.dataset.value);
+  });
+  group.addEventListener('click', (event) => {
     const btn = (event.target as HTMLElement).closest<HTMLButtonElement>('.seg-btn');
     if (!btn?.dataset.value) return;
     event.preventDefault();
@@ -52,9 +75,9 @@ function render(s: Settings): void {
   setSeg('pace', s.pace);
   setSeg('clickAction', s.clickAction);
   setSeg('opacity', String(s.opacity));
-  controls.portrait.src = s.spriteStyle === 'non-jacketed'
-    ? '../../src/assets/icons/jimothy-portrait-nojacket.png'
-    : '../../src/assets/icons/jimothy-portrait.png';
+  controls.portrait.src = assetUrl(s.spriteStyle === 'non-jacketed'
+    ? 'icons/jimothy-portrait-nojacket.png'
+    : 'icons/jimothy-portrait.png');
 }
 
 function save(partial: Partial<Settings>): void {

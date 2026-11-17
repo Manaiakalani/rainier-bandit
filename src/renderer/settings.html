@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file:; style-src 'self'; script-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self'; img-src 'self' file:; font-src 'self'; connect-src 'self'">
   <title>Jimothy Settings</title>
+  <meta name="description" content="Settings for Jimothy, the desktop raccoon.">
   <link rel="stylesheet" href="./theme.css">
   <link rel="stylesheet" href="./settings.css">
 </head>
 <body>
   <header class="masthead">
-    <img class="portrait" id="portrait" src="../../src/assets/icons/jimothy-portrait.png" width="80" height="80" alt="">
+    <img class="portrait" id="portrait" src="../assets/icons/jimothy-portrait.png" width="80" height="80" alt="">
     <div>
       <h1>Jimothy</h1>
       <p>A raccoon who lives on your desktop.</p>
@@ -63,7 +64,7 @@
             <span class="label">Roam around</span>
             <span class="desc">Walk along the bottom of the screen</span>
           </span>
-          <input id="roaming" type="checkbox" role="switch">
+          <input id="roaming" type="checkbox">
         </label>
         <div class="row nested" id="wanderRow" hidden>
           <span>
@@ -109,21 +110,21 @@
             <span class="label">Breathing</span>
             <span class="desc">Subtle idle motion while he stands still</span>
           </span>
-          <input id="breathing" type="checkbox" role="switch">
+          <input id="breathing" type="checkbox">
         </label>
         <label class="row" for="speechBubbles">
           <span>
             <span class="label">Speech bubbles</span>
             <span class="desc">Occasional raccoon asides</span>
           </span>
-          <input id="speechBubbles" type="checkbox" role="switch">
+          <input id="speechBubbles" type="checkbox">
         </label>
         <label class="row" for="sleepAtNight">
           <span>
             <span class="label">Sleep at night</span>
             <span class="desc">Doze between 10 PM and 7 AM</span>
           </span>
-          <input id="sleepAtNight" type="checkbox" role="switch">
+          <input id="sleepAtNight" type="checkbox">
         </label>
       </div>
     </section>
@@ -136,7 +137,7 @@
             <span class="label">Launch at login</span>
             <span class="desc">Start Jimothy when you sign in</span>
           </span>
-          <input id="launchAtLogin" type="checkbox" role="switch">
+          <input id="launchAtLogin" type="checkbox">
         </label>
         <div class="row">
           <span>
