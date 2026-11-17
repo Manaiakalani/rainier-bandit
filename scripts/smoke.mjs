@@ -10,8 +10,10 @@ const userData = fs.mkdtempSync(path.join(os.tmpdir(), 'jimothy-smoke-'));
 const artifacts = process.env.JIMOTHY_SMOKE_DIR || path.join(os.tmpdir(), 'jimothy-smoke-artifacts');
 fs.mkdirSync(artifacts, { recursive: true });
 
+const electronArgs = (process.env.ELECTRON_EXTRA_ARGS ?? '').split(/\s+/).filter(Boolean);
+
 const app = await electron.launch({
-  args: [root],
+  args: [...electronArgs, root],
   cwd: root,
   env: {
     ...process.env,
