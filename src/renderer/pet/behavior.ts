@@ -1,6 +1,4 @@
 import {
-  BLINK_CHANCE,
-  BLINK_MS,
   CLICK_DURATION_MS,
   DEFAULT_SETTINGS,
   GRAVITY,
@@ -17,7 +15,7 @@ import {
 } from '../../shared/constants';
 import { clamp, isSleepTime, pickWeighted, randomBetween, wanderTuning } from '../../shared/behavior-utils';
 import type { PetState, Settings, WeightedBehavior } from '../../shared/types';
-import { SpriteEngine } from './sprite-engine';
+import type { SpriteEngine } from './sprite-engine';
 
 const IDLE_BEHAVIORS: WeightedBehavior[] = [
   { animation: 'idle', mode: 'idle', weight: 90, durationMs: [IDLE_MIN, IDLE_MAX] },
@@ -34,7 +32,6 @@ export class BehaviorController {
   private walkTargetX = 0;
   private minX = 0;
   private maxX = 0;
-  private groundY = 0;
 
   private napping = false;
   private petStreak = 0;
@@ -144,6 +141,11 @@ export class BehaviorController {
     if (wasPaused && !paused && this.settings.speechBubbles && this.onSpeechBubble) {
       this.onSpeechBubble('I wasn\'t frozen. I was thinking.');
     }
+  }
+
+  hold(ms: number): void {
+    this.behaviorDuration = Math.max(this.behaviorDuration, ms);
+    this.state.behaviorTimer = 0;
   }
 
   applySettings(settings: Settings): void {
@@ -284,7 +286,6 @@ export class BehaviorController {
     const s = this.state;
     this.minX = minX;
     this.maxX = maxX;
-    this.groundY = groundY;
 
     if (s.mode === 'falling') {
       s.vy += GRAVITY * (deltaMs / 1000);
@@ -341,11 +342,6 @@ export class BehaviorController {
 
     this.sprite.play(s.animation, false);
 
-    if (s.mode === 'idle' && Math.random() < BLINK_CHANCE) {
-      this.playBlink();
-      return;
-    }
-
     if (s.mode === 'idle') {
       this.tickCorner(deltaMs);
       this.maybeSeasonalIdle();
@@ -382,14 +378,6 @@ export class BehaviorController {
     if (Math.random() < 0.35) {
       this.onSpeechBubble(lines[Math.floor(Math.random() * lines.length)]);
     }
-  }
-
-  private playBlink(): void {
-    this.state.mode = 'emoting';
-    this.state.animation = 'blink';
-    this.sprite.play('blink');
-    this.behaviorDuration = BLINK_MS;
-    this.state.behaviorTimer = 0;
   }
 
   private arriveFromWalk(): void {

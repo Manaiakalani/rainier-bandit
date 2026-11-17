@@ -15,10 +15,6 @@ export function setPaused(next: boolean): boolean {
   return paused;
 }
 
-export function togglePause(): boolean {
-  return setPaused(!paused);
-}
-
 export function getIsNapping(): boolean {
   return napping;
 }
@@ -27,10 +23,6 @@ export function setNapping(next: boolean): boolean {
   napping = next;
   notifyChrome();
   return napping;
-}
-
-export function toggleNap(): boolean {
-  return setNapping(!napping);
 }
 
 export function isQuitting(): boolean {

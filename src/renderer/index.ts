@@ -14,6 +14,13 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function spriteRoot(): string {
+  if (window.location.protocol === 'jimothy:') {
+    return new URL('../assets/sprites', window.location.href).href.replace(/\/$/, '');
+  }
+  return '../../src/assets/sprites';
+}
+
 async function main() {
   const canvasEl = document.getElementById('pet-canvas');
   if (!(canvasEl instanceof HTMLCanvasElement)) {
@@ -53,8 +60,7 @@ async function main() {
   const behavior = new BehaviorController(sprite);
 
   behavior.setSpeechCallback((msg) => bubble.show(msg));
-  const spriteBase = new URLSearchParams(window.location.search).get('sprites')
-    || '../../src/assets/sprites';
+  const spriteBase = spriteRoot();
 
   let isPaused = await window.jimothy.getPauseState();
   behavior.setPaused(isPaused);
@@ -303,6 +309,7 @@ async function main() {
 
   sprite.play('idle');
   if (!settings.greeted) {
+    behavior.hold(3400);
     bubble.show("Hi! I'm Jimothy.", 3000);
     void window.jimothy.updateSettings({ greeted: true });
   }

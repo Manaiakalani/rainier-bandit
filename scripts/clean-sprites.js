@@ -90,7 +90,7 @@ async function cleanFile(filePath) {
 async function writePortrait() {
   const idle = path.join(ROOT, 'jacketed', 'idle.png');
   const cell = await sharp(idle).extract({ left: 0, top: 0, width: 256, height: 256 }).ensureAlpha().png().toBuffer();
-  const { data, info } = await sharp(cell).raw().toBuffer({ resolveWithObject: true });
+  const { data } = await sharp(cell).raw().toBuffer({ resolveWithObject: true });
   let minX = 256, minY = 256, maxX = 0, maxY = 0;
   for (let y = 0; y < 256; y++) {
     for (let x = 0; x < 256; x++) {

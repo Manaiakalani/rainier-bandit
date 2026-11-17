@@ -1,7 +1,5 @@
 import type { ClickAction, OpacityLevel, PetScale, Settings, SpriteStyle, WalkPace, WanderFrequency } from './types';
 
-export const APP_VERSION = '1.0.0';
-
 export const IPC = {
   SET_IGNORE_MOUSE: 'set-ignore-mouse',
   MOVE_WINDOW: 'move-window',
@@ -15,7 +13,6 @@ export const IPC = {
   PET_REACTION: 'pet-reaction',
   TOGGLE_NAP: 'toggle-nap',
   GET_NAP_STATE: 'get-nap-state',
-  QUIT_APP: 'quit-app',
   GET_SETTINGS: 'get-settings',
   UPDATE_SETTINGS: 'update-settings',
   SETTINGS_CHANGED: 'settings-changed',
@@ -53,7 +50,6 @@ export const TASKBAR_TUCK = 8;
 export const GRAVITY = 800;
 export const WALK_SPEED = 88;
 export const RUN_SPEED = 120;
-export const SNEAK_SPEED = 30;
 
 export const IDLE_MIN = 10000;
 export const IDLE_MAX = 22000;
@@ -62,9 +58,6 @@ export const WALK_MAX = 6000;
 export const SLEEP_HOUR_START = 22;
 export const SLEEP_HOUR_END = 7;
 export const SLEEP_RECHECK_MS = 30_000;
-export const CLICK_EMOTE_MS = 1500;
-export const BLINK_MS = 480;
-export const BLINK_CHANCE = 0;
 export const DRAG_THRESHOLD_PX = 5;
 export const HIT_ALPHA_THRESHOLD = 20;
 export const MAX_FRAME_DELTA_MS = 100;

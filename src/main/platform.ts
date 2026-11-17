@@ -1,8 +1,12 @@
-import { app, BrowserWindow } from 'electron';
+import { app, type BrowserWindow } from 'electron';
 import * as path from 'path';
 
 export const isMac = process.platform === 'darwin';
 export const isWindows = process.platform === 'win32';
+
+export function isDev(): boolean {
+  return process.argv.includes('--dev');
+}
 
 export function hideDockIfMac(): void {
   if (isMac && app.dock) {
@@ -17,23 +21,23 @@ export function applyPetWindowPlatform(win: BrowserWindow): void {
     win.setWindowButtonVisibility(false);
     return;
   }
-  win.setAlwaysOnTop(true, 'screen-saver');
+  if (isWindows) {
+    win.setAlwaysOnTop(true, 'screen-saver');
+    return;
+  }
+  win.setAlwaysOnTop(true, 'floating');
 }
 
 export function applyLoginItem(openAtLogin: boolean): void {
   try {
     if (app.isPackaged) {
-      app.setLoginItemSettings({
-        openAtLogin,
-        openAsHidden: true,
-      });
+      app.setLoginItemSettings({ openAtLogin });
       return;
     }
 
     const appPath = path.resolve(process.argv[1] || app.getAppPath());
     app.setLoginItemSettings({
       openAtLogin,
-      openAsHidden: true,
       path: process.execPath,
       args: [appPath],
     });

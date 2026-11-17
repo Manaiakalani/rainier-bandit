@@ -1,6 +1,7 @@
 import { BrowserWindow, nativeImage, nativeTheme, screen } from 'electron';
-import * as path from 'path';
-import { iconFile, rendererHtml } from './paths';
+import { rendererUrl } from './app-url';
+import { iconFile } from './paths';
+import { settingsWebPreferences } from './security';
 
 let settingsWindow: BrowserWindow | null = null;
 let displayFitBound = false;
@@ -62,16 +63,11 @@ export function openSettingsWindow(): void {
     skipTaskbar: false,
     autoHideMenuBar: true,
     backgroundColor: nativeTheme.shouldUseDarkColors ? '#1c1916' : '#f6f0e6',
-    webPreferences: {
-      preload: path.join(__dirname, '..', 'preload', 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: true,
-    },
+    webPreferences: settingsWebPreferences(),
   });
 
   settingsWindow.setMenuBarVisibility(false);
-  settingsWindow.loadFile(rendererHtml('settings.html'));
+  settingsWindow.loadURL(rendererUrl('settings.html'));
 
   const themeListener = (): void => {
     if (settingsWindow && !settingsWindow.isDestroyed()) {
@@ -81,7 +77,7 @@ export function openSettingsWindow(): void {
   nativeTheme.on('updated', themeListener);
 
   settingsWindow.on('closed', () => {
-    nativeTheme.removeListener('updated', themeListener);
+    nativeTheme.off('updated', themeListener);
     settingsWindow = null;
   });
 }

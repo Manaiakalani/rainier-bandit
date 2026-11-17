@@ -22,16 +22,23 @@
   "main": "dist/main/main.js",
   "author": "Manaiakalani",
   "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "generate:sprite-manifest": "node scripts/generate-sprite-manifest.js",
     "pack:sprites": "node scripts/pack-sprites.js",
     "copy:renderer": "node scripts/copy-renderer.js",
-    "build:main": "tsc",
-    "build:preload": "npx esbuild src/preload/preload.ts --bundle --outfile=dist/preload/preload.js --platform=node --format=cjs --target=es2022 --external:electron",
-    "build:renderer": "npx esbuild src/renderer/index.ts --bundle --outfile=dist/renderer/bundle.js --platform=browser --format=iife --target=es2022",
-    "build:settings": "npx esbuild src/renderer/settings.ts --bundle --outfile=dist/renderer/settings.js --platform=browser --format=iife --target=es2022",
+    "build:main": "tsc -p tsconfig.json",
+    "build:preload": "esbuild src/preload/preload.ts --bundle --outfile=dist/preload/preload.js --platform=browser --format=cjs --target=es2022 --external:electron --sourcemap",
+    "build:renderer": "esbuild src/renderer/index.ts --bundle --outfile=dist/renderer/bundle.js --platform=browser --format=iife --target=es2022 --sourcemap",
+    "build:settings": "esbuild src/renderer/settings.ts --bundle --outfile=dist/renderer/settings.js --platform=browser --format=iife --target=es2022 --sourcemap",
     "build": "npm run build:main && npm run build:preload && npm run build:renderer && npm run build:settings && npm run copy:renderer",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "lint": "biome lint src scripts",
     "test": "npm run build:main && npm run build:preload && npm run build:settings && node --test scripts/test.cjs",
+    "smoke": "npm run build && node scripts/smoke.mjs",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build",
     "screenshots": "node scripts/capture-screenshots.mjs",
     "gif": "node scripts/capture-gif.mjs",
     "start": "npm run build && electron .",
@@ -42,13 +49,28 @@
     "dist:mac": "npm run build && electron-builder --mac"
   },
   "devDependencies": {
-    "electron": "^42.11.16",
-    "electron-builder": "^26.15.3",
-    "esbuild": "^0.28.1",
-    "playwright": "^1.63.0",
-    "puppeteer": "^25.11.0",
+    "@biomejs/biome": "^2.6.8",
+    "@types/node": "^24.19.2",
+    "electron": "^45.3.3",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2",
+    "playwright": "^1.65.1",
+    "puppeteer": "^25.17.0",
     "sharp": "^0.35.5",
-    "typescript": "^5.5.0"
+    "typescript": "^7.0.2"
+  },
+  "overrides": {
+    "@electron/universal": {
+      "minimatch": "11.0.9"
+    },
+    "app-builder-lib": {
+      "minimatch": "11.0.9"
+    }
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "electron@45.3.3": true,
+    "sharp@0.35.5": true
   },
   "build": {
     "appId": "com.jimothy.desktop-mascot",
@@ -63,6 +85,17 @@
       "!src/assets/sprites/no_jacket/**",
       "!src/assets/sprites/jacketed/jimothy_*.png"
     ],
+    "asar": true,
+    "executableName": "Jimothy",
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    },
     "win": {
       "target": "nsis",
       "icon": "src/assets/icons/jimothy-1024.png"
@@ -90,9 +123,5 @@
     "dmg": {
       "title": "Jimothy"
     }
-  },
-  "allowScripts": {
-    "esbuild@0.28.1": true,
-    "electron@42.11.16": true
   }
 }

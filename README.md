@@ -58,7 +58,7 @@ Yes. MIT license. The app has no accounts.
 
 ### Will the pet steal clicks or the keyboard?
 
-No. Empty sprite pixels are click-through, and the pet window stays unfocused.
+No. Empty sprite pixels are click-through. The pet window is not focusable, and showing it does not take keyboard focus from the app you were using.
 
 ### Can the raccoon start at login?
 
@@ -66,7 +66,7 @@ Yes. Launch at login is in settings.
 
 ## Run
 
-Jimothy is a TypeScript Electron app.
+Jimothy is a TypeScript Electron app. Node.js 22 or newer.
 
 ```bash
 npm install
@@ -74,7 +74,9 @@ npm test
 npm start
 ```
 
-`npm run dev` is the same build with detached DevTools (`--dev`).
+`npm run dev` is the same build with detached DevTools (`--dev`). `npm run typecheck` and `npm run lint` cover the TypeScript and Biome checks. `npm run verify` runs those, the unit tests, and a full build. `npm run smoke` launches the real app on a display (or `xvfb-run`) and checks that the overlay stays unfocused, draws a sprite, and opens settings.
+
+Set `JIMOTHY_USER_DATA` to keep his settings in a different folder. GitHub Actions runs the same typecheck, lint, unit tests, smoke test, and unpacked package.
 
 ## Package
 
@@ -83,7 +85,9 @@ npm run dist:win    # NSIS installer, from Windows
 npm run dist:mac    # DMG and zip, from macOS
 ```
 
-macOS builds have to be made on a Mac. The packaged app is an agent (`LSUIElement`): menu bar only, no Dock icon. Packaging uses the Electron and electron-builder versions in `package.json`. The renderer is sandboxed, with context isolation on and Node integration off.
+macOS builds have to be made on a Mac. The packaged app is an agent (`LSUIElement`): menu bar only, no Dock icon. `npm run pack` builds an unpacked app for the machine you are on. Packaging uses the Electron and electron-builder versions in `package.json`.
+
+The renderer is sandboxed, with context isolation on and Node integration off. Pages load from a `jimothy://local` origin that only serves this app's renderer and sprite files. A strict content security policy blocks inline scripts and remote images. The packaged app turns on Electron fuses that disable `ELECTRON_RUN_AS_NODE`, Node inspect arguments, and extra `file://` privileges.
 
 To sign and notarize a Mac build, set these before `npm run dist:mac`:
 
@@ -105,7 +109,7 @@ src/shared/        Types, settings, layout math
 src/assets/sprites Jacketed and non-jacketed 512 px sheets
 ```
 
-Live sheets are 512 by 512 pixel cells: idle, walk, run, wave, sit, sleep, jump, and celebrate. Walk and run play one gait cycle. `no_jacket/` is unused inventory.
+Live sheets are 512 by 512 pixel cells: idle, walk, run, wave, sit, sleep, jump, and celebrate. Walk and run play the full 8-pose strip. `no_jacket/` is unused inventory.
 
 ## License
 
